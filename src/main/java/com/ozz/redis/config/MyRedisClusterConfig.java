@@ -18,7 +18,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-public class RedisClusterConfig {
+public class MyRedisClusterConfig {
   @Bean
   @Primary
   public RedisTemplate redisTemplate(@Value("${spring.custom.redis.cluster.nodes}") String nodes,
