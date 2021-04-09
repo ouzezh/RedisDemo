@@ -11,7 +11,7 @@ spring:
         password:
         timeout: 3000
 #  redis:
-#    password: c43SefdkOvd
+#    password: x
 #    sentinel:
 #      master: master7922
-#      nodes: 10.202.80.117:17922,10.202.80.118:17922
+#      nodes: localhost:17922,localhost:17922
