@@ -22,9 +22,9 @@ public class JedisSentinelTemplate implements InitializingBean, DisposableBean {
   private String nodes;
   @Value("${spring.redis.sentinel.master}")
   private String master;
-  @Value("${spring.redis.passWord}")
+  @Value("${spring.redis.password}")
   private String passWord;
-  @Value("${spring.redis.timeOut}")
+  @Value("${spring.redis.timeout}")
   private Long timeOut;
 
   public static void main(String[] args) throws Exception {
