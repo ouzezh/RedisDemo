@@ -27,8 +27,8 @@ public class MyRedisClusterConfig {
   @Primary
   public RedisTemplate redisTemplate(@Value("${spring.custom.redis.cluster.nodes}") String nodes,
       @Value("${spring.custom.redis.cluster.password}") String password,
-      @Value("${spring.custom.redis.cluster.timeout}") long timeout,
       @Value("${spring.custom.redis.cluster.max-redirects}") int maxRedirect,
+      @Value("${spring.custom.redis.cluster.timeout}") Duration timeout,
       @Value("${spring.custom.redis.cluster.max-active}") int maxActive,
       @Value("${spring.custom.redis.cluster.max-wait}") int maxWait,
       @Value("${spring.custom.redis.cluster.max-idle}") int maxIdle,
@@ -40,7 +40,7 @@ public class MyRedisClusterConfig {
   }
 
   private JedisConnectionFactory jedisClusterConnectionFactory(String nodes, String password,
-      long timeout, int maxRedirect, int maxActive, int maxWait, int maxIdle, int minIdle) {
+      Duration timeout, int maxRedirect, int maxActive, int maxWait, int maxIdle, int minIdle) {
     RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration();
     List<RedisNode> nodeList = Arrays
         .stream(nodes.replaceAll("\\s", "").split(","))
@@ -61,7 +61,7 @@ public class MyRedisClusterConfig {
 
     JedisClientConfiguration.DefaultJedisClientConfigurationBuilder builder = (JedisClientConfiguration.DefaultJedisClientConfigurationBuilder) JedisClientConfiguration
         .builder();
-    builder.connectTimeout(Duration.ofSeconds(timeout));
+    builder.connectTimeout(timeout);
     builder.usePooling();
     builder.poolConfig(genericObjectPoolConfig);
     JedisConnectionFactory connectionFactory = new JedisConnectionFactory(redisClusterConfiguration, builder.build());

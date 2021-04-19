@@ -1,6 +1,7 @@
 package com.ozz.redis.direct.sentinel;
 
 import com.google.common.base.Strings;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +26,14 @@ public class JedisSentinelTemplate implements InitializingBean, DisposableBean {
   @Value("${spring.redis.password}")
   private String passWord;
   @Value("${spring.redis.timeout}")
-  private Long timeOut;
+  private Duration timeOut;
 
   public static void main(String[] args) throws Exception {
     JedisSentinelTemplate jst = new JedisSentinelTemplate();
     jst.setNodes("localhost:26379,localhost2:26379");
     jst.setMaster("masterName");
     jst.setPassWord("");
-    jst.setTimeOut(2000L);
+    jst.setTimeOut(Duration.ofMinutes(30));
     jst.afterPropertiesSet();
 
     System.out.println("-start-");
@@ -64,14 +65,13 @@ public class JedisSentinelTemplate implements InitializingBean, DisposableBean {
   @Override
   public void afterPropertiesSet() throws Exception {
     GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
-    poolConfig.setMaxWaitMillis(this.timeOut);
+    poolConfig.setMaxWaitMillis(this.timeOut.toMillis());
 
     Set<String> nodeSet = Arrays
         .stream(this.nodes.replaceAll("\\s", "").split(","))
         .collect(Collectors.toSet());
 
-    pool = new JedisSentinelPool(this.master, nodeSet, poolConfig,
-        Strings.emptyToNull(this.passWord));
+    pool = new JedisSentinelPool(this.master, nodeSet, poolConfig, Strings.emptyToNull(this.passWord));
   }
 
   public String get(String key) {
