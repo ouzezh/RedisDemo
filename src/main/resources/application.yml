@@ -1,17 +1,18 @@
 spring:
-  custom:
-    redis:
-      cluster:
-        nodes: localhost:6379,localhost2:6379
-        max-active: 500
-        max-idle: 500
-        max-redirects: 3
-        max-wait: -1
-        min-idle: 20
-        password:
-        timeout: 3000
-#  redis:
-#    password: x
-#    sentinel:
-#      master: master7922
-#      nodes: localhost:17922,localhost:17922
+#  custom:
+#    redis:
+#      cluster:  # com.ozz.redis.config.MyRedisClusterConfig
+#        nodes: localhost:6379,localhost2:6379
+#        password:
+#        timeout: 3000
+#        max-redirects: 3
+#        max-active: 500
+#        max-idle: 500
+#        max-wait: -1
+#        min-idle: 20
+  redis: # org.springframework.boot.autoconfigure.data.redis.RedisProperties
+    password: x
+    timeout: 30m
+    sentinel:
+      master: master7922
+      nodes: localhost:17922,localhost:17922

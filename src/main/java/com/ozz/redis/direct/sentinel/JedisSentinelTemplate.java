@@ -18,13 +18,13 @@ import redis.clients.jedis.JedisSentinelPool;
 public class JedisSentinelTemplate implements InitializingBean, DisposableBean {
 
   private JedisSentinelPool pool;
-  @Value("${redis.nodes}")
+  @Value("${spring.redis.sentinel.nodes}")
   private String nodes;
-  @Value("${redis.master}")
+  @Value("${spring.redis.sentinel.master}")
   private String master;
-  @Value("${redis.passWord}")
+  @Value("${spring.redis.passWord}")
   private String passWord;
-  @Value("${redis.timeOut}")
+  @Value("${spring.redis.timeOut}")
   private Long timeOut;
 
   public static void main(String[] args) throws Exception {
@@ -32,7 +32,7 @@ public class JedisSentinelTemplate implements InitializingBean, DisposableBean {
     jst.setNodes("localhost:26379,localhost2:26379");
     jst.setMaster("masterName");
     jst.setPassWord("");
-    jst.setTimeOut(2000l);
+    jst.setTimeOut(2000L);
     jst.afterPropertiesSet();
 
     System.out.println("-start-");
