@@ -34,6 +34,7 @@ public class MyRedisService {
         SessionCallback<List<Object>> callback = new SessionCallback<>() {
             @Override
             public <K, V> List<Object> execute(@Nullable RedisOperations<K, V> operations) throws DataAccessException {
+                StringRedisTemplate rt = (StringRedisTemplate) operations;
                 rt.watch(key);
                 String ver = rt.opsForValue().get(key);
                 rt.multi();// 开启事务
