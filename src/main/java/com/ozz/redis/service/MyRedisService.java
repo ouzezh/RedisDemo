@@ -33,7 +33,7 @@ public class MyRedisService {
     public boolean optimisticSet(String key, String version, Duration duration, String beforeVersion) {
         SessionCallback<List<Object>> callback = new SessionCallback<>() {
             @Override
-            public <K, V> List<Object> execute(@Nullable  RedisOperations<K, V> operations) throws DataAccessException {
+            public <K, V> List<Object> execute(@Nullable RedisOperations<K, V> operations) throws DataAccessException {
                 StringRedisTemplate srt = (StringRedisTemplate) Objects.requireNonNull(operations);
                 srt.watch(key);
                 String ver = srt.opsForValue().get(key);
