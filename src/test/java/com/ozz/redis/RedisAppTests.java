@@ -1,22 +1,20 @@
 package com.ozz.redis;
 
-import com.ozz.redis.direct.sentinel.JedisSentinelTemplate;
+import com.ozz.redis.service.MyRedisService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
+
+import java.time.Duration;
 
 @SpringBootTest
 class RedisAppTests {
-	@Autowired
-	RedisTemplate redisTemplate;
-	@Autowired
-	JedisSentinelTemplate jedisSentinelTemplate;
+    @Autowired
+    MyRedisService myRedisService;
 
-	@Test
-	void contextLoads() {
-		System.out.println(redisTemplate.opsForValue().get("myKey"));
-		System.out.println(jedisSentinelTemplate.get("myKey"));
-	}
+    @Test
+    void contextLoads() {
+        System.out.println(myRedisService.optimisticSet("myKey", "1", Duration.ofHours(1), "1"));
+    }
 
 }
