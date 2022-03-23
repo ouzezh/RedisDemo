@@ -30,7 +30,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'redis.clients:jedis:3.3.0'
-	implementation 'com.alibaba:fastjson:1.2.73'
+	implementation 'com.alibaba:fastjson:1.2.79'
 	implementation 'com.google.guava:guava:31.1-jre'
 
 	compileOnly 'org.projectlombok:lombok'
