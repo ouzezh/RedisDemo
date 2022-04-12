@@ -1,12 +1,6 @@
 package com.ozz.redis.direct.sentinel;
 
-import com.google.common.base.Strings;
-import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import cn.hutool.core.util.StrUtil;
 import lombok.Setter;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.DisposableBean;
@@ -14,6 +8,13 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisSentinelPool;
+
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Setter
 public class JedisSentinelTemplate implements InitializingBean, DisposableBean {
@@ -71,7 +72,7 @@ public class JedisSentinelTemplate implements InitializingBean, DisposableBean {
         .stream(this.nodes.replaceAll("\\s", "").split(","))
         .collect(Collectors.toSet());
 
-    pool = new JedisSentinelPool(this.master, nodeSet, poolConfig, Strings.emptyToNull(this.passWord));
+    pool = new JedisSentinelPool(this.master, nodeSet, poolConfig, StrUtil.emptyToNull(this.passWord));
   }
 
   public String get(String key) {

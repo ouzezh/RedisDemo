@@ -30,8 +30,10 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'redis.clients:jedis:3.3.0'
+
+    implementation 'cn.hutool:hutool-all:5.8.0.M2'// Hutool是一个小而全的Java工具类库
+
 	implementation 'com.alibaba:fastjson:1.2.80'
-	implementation 'com.google.guava:guava:31.1-jre'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
