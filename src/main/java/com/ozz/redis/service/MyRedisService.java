@@ -1,5 +1,6 @@
 package com.ozz.redis.service;
 
+import cn.hutool.core.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.RedisOperations;
@@ -38,7 +39,7 @@ public class MyRedisService {
                 String ver = srt.opsForValue().get(key);
                 srt.multi();// 开启事务
                 try {
-                    if (!MyRedisService.this.equals(beforeVersion, ver)) {
+                    if (!StrUtil.equals(beforeVersion, ver)) {
                         return Collections.emptyList();
                     }
                     srt.opsForValue().set(key, version, duration);
@@ -53,10 +54,4 @@ public class MyRedisService {
         return Objects.requireNonNull(list).size() == 1 && Boolean.TRUE.equals(list.get(0));
     }
 
-    private boolean equals(String beforeVersion, String ver) {
-        if (beforeVersion == null) {
-            return ver == null;
-        }
-        return beforeVersion.equals(ver);
-    }
 }
