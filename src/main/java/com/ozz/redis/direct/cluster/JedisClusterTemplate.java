@@ -1,10 +1,6 @@
 package com.ozz.redis.direct.cluster;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
+import cn.hutool.log.StaticLog;
 import lombok.Setter;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -13,6 +9,12 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Setter
 public class JedisClusterTemplate implements InitializingBean, DisposableBean {
@@ -32,9 +34,9 @@ public class JedisClusterTemplate implements InitializingBean, DisposableBean {
     jst.setMaxAttempts(3);
     jst.afterPropertiesSet();
 
-    System.out.println("-start-");
-    System.out.println(jst.get("myKey"));
-    System.out.println("-end-");
+    StaticLog.info("-start-");
+    StaticLog.info(jst.get("myKey"));
+    StaticLog.info("-end-");
 
     jst.destroy();
   }

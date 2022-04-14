@@ -1,5 +1,7 @@
 package com.ozz.redis;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import com.ozz.redis.service.MyRedisService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ class RedisAppTests {
 
     @Test
     void contextLoads() {
-        System.out.println(myRedisService.optimisticSet("myKey", "1", Duration.ofHours(1), "1"));
+        StaticLog.info(StrUtil.toString(myRedisService.optimisticSet("myKey", "1", Duration.ofHours(1), "1")));
     }
 
 }

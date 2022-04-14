@@ -1,11 +1,7 @@
 package com.ozz.redis.config;
 
+import cn.hutool.log.StaticLog;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
-import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,7 +15,11 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-@Slf4j
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Configuration
 @ConditionalOnProperty("spring.custom.redis.cluster.nodes")
 public class MyRedisClusterConfig {
@@ -33,7 +33,7 @@ public class MyRedisClusterConfig {
       @Value("${spring.custom.redis.cluster.max-wait}") int maxWait,
       @Value("${spring.custom.redis.cluster.max-idle}") int maxIdle,
       @Value("${spring.custom.redis.cluster.min-idle}") int minIdle) {
-    log.debug("--> start init " + this.getClass().getName());
+    StaticLog.debug("--> start init " + this.getClass().getName());
     JedisConnectionFactory connectionFactory =  jedisClusterConnectionFactory(nodes, password,
         timeout, maxRedirect, maxActive, maxWait, maxIdle, minIdle);
     return createRedisClusterTemplate(connectionFactory);

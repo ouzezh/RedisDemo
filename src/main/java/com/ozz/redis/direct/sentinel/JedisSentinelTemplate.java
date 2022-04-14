@@ -1,6 +1,7 @@
 package com.ozz.redis.direct.sentinel;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import lombok.Setter;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.DisposableBean;
@@ -37,21 +38,21 @@ public class JedisSentinelTemplate implements InitializingBean, DisposableBean {
     jst.setTimeOut(Duration.ofMinutes(30));
     jst.afterPropertiesSet();
 
-    System.out.println("-start-");
+    StaticLog.info("-start-");
 
-    System.out.println(jst.get("x"));
+    StaticLog.info(jst.get("x"));
 
     // print info
     String[] node = jst.nodes.replaceAll("\\s", "").split(",")[0].split(":");
     try (Jedis jedis = new Jedis(node[0], Integer.valueOf(node[1]))) {
       List<Map<String, String>> list = jedis.sentinelSlaves(jst.master);
-      System.out.println(String.format("master info: %s, %s", jst.master, jst.pool.getCurrentHostMaster()));
+      StaticLog.info(String.format("master info: %s, %s", jst.master, jst.pool.getCurrentHostMaster()));
       for (int i = 0; i < list.size(); i++) {
-        System.out.println(String.format("\tslave %s: %s", i + 1, list.get(i).get("name")));
+        StaticLog.info(String.format("\tslave %s: %s", i + 1, list.get(i).get("name")));
       }
     }
 
-    System.out.println("-end-");
+    StaticLog.info("-end-");
 
     jst.destroy();
   }

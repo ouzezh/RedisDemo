@@ -1,8 +1,6 @@
 package com.ozz.redis.direct.shard;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import cn.hutool.log.StaticLog;
 import lombok.Setter;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -11,6 +9,10 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Setter
 public class ShardedJedisTemplate implements InitializingBean, DisposableBean {
@@ -27,9 +29,9 @@ public class ShardedJedisTemplate implements InitializingBean, DisposableBean {
     rjt.setTimeOut(3000);
     rjt.afterPropertiesSet();
 
-    System.out.println("-start-");
-    System.out.println(rjt.get("x"));
-    System.out.println("-end-");
+    StaticLog.info("-start-");
+    StaticLog.info(rjt.get("x"));
+    StaticLog.info("-end-");
 
     rjt.destroy();
   }
